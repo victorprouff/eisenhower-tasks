@@ -13,6 +13,7 @@ function createWindow() {
     minHeight: 700,
     titleBarStyle: process.platform === 'darwin' ? 'default' : 'default',
     backgroundColor: '#f5f5f5',
+    icon: path.join(__dirname, 'build/icon.png'), // ← Ajoute cette ligne
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

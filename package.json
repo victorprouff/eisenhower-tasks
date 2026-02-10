@@ -1,6 +1,6 @@
 {
   "name": "eisenhower-tasks",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Application de gestion des tâches avec la matrice d'Eisenhower",
   "main": "main.js",
   "scripts": {
@@ -34,26 +34,30 @@
       "target": [
         "dmg",
         "zip"
-      ]
+      ],
+    "icon": "build/icon.icns"
     },
     "win": {
       "target": [
         "nsis",
         "portable"
-      ]
+      ],
+      "icon": "build/icon.ico"
     },
     "linux": {
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "icon": "build/icon.png"
     },
     "files": [
       "main.js",
       "preload.js",
       "renderer.js",
       "index.html",
-      "styles.css"
+      "styles.css",
+      "build/icon.*"
     ]
   },
   "devDependencies": {
