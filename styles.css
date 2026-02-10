@@ -4,27 +4,99 @@
   box-sizing: border-box;
 }
 
+/* Variables de couleurs pour le thème clair (par défaut) */
+:root {
+  --bg-primary: #f5f5f5;
+  --bg-secondary: white;
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-tertiary: #999;
+  --border-color: #e5e5e5;
+  --input-bg: white;
+  --task-bg: #f8f8f8;
+  --task-hover: #f0f0f0;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: #f5f5f5;
-  color: #333;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Variables de couleurs pour le thème sombre */
+body.dark-theme {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2a2a2a;
+  --text-primary: #e5e5e5;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #707070;
+  --border-color: #3a3a3a;
+  --input-bg: #2a2a2a;
+  --task-bg: #333333;
+  --task-hover: #3a3a3a;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+.titlebar {
+  -webkit-app-region: drag;
+  background: var(--bg-secondary);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.titlebar-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.theme-toggle {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  font-size: 18px;
+  width: auto;
+}
+
+.theme-toggle:hover {
+  background: #f0f0f0;
+}
+
+.container {
+  padding-top: 40px;
 }
 
 .container {
   display: flex;
   height: 100vh;
   padding: 20px;
+  padding-top: 40px;
   gap: 20px;
 }
 
 /* Colonnes latérales */
 .sidebar {
   width: 280px;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px var(--shadow);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -32,29 +104,31 @@ body {
 
 .sidebar-header {
   padding: 20px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .sidebar-header h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 /* Colonne gauche - Ajout de tâches */
 .add-task-section {
   padding: 20px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--border-color);
 }
 
 #taskInput {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e5e5e5;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
   margin-bottom: 10px;
   transition: border-color 0.2s;
+  background: var(--input-bg);
+  color: var(--text-primary);
 }
 
 #taskInput:focus {
@@ -92,7 +166,7 @@ body {
 .unassigned-tasks h3 {
   font-size: 13px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 12px;
@@ -107,7 +181,7 @@ body {
 /* Tâches */
 .task-item {
   padding: 12px;
-  background: #f8f8f8;
+  background: var(--task-bg);
   border-radius: 8px;
   font-size: 14px;
   cursor: move;
@@ -119,9 +193,9 @@ body {
 }
 
 .task-item:hover {
-  background: #f0f0f0;
+  background: var(--task-hover);
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--shadow);
 }
 
 .task-item.dragging {
@@ -136,7 +210,7 @@ body {
 .task-delete {
   background: none;
   border: none;
-  color: #999;
+  color: var(--text-tertiary);
   cursor: pointer;
   font-size: 16px;
   padding: 4px 8px;
@@ -145,7 +219,7 @@ body {
 }
 
 .task-delete:hover {
-  background: #e5e5e5;
+  background: var(--border-color);
   color: #ff3b30;
 }
 
@@ -183,9 +257,9 @@ body {
 }
 
 .quadrant {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px var(--shadow);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -223,7 +297,7 @@ body {
 
 .quadrant-label {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -252,7 +326,7 @@ body {
   position: absolute;
   font-size: 11px;
   font-weight: 700;
-  color: #999;
+  color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -329,7 +403,7 @@ body {
 /* État vide */
 .empty-state {
   text-align: center;
-  color: #999;
+  color: var(--text-tertiary);
   font-size: 13px;
   padding: 20px;
   font-style: italic;
@@ -349,4 +423,9 @@ body {
 
 .task-item {
   animation: slideIn 0.2s ease-out;
+}
+
+/* Thème sombre : ajuster le hover du bouton de thème */
+body.dark-theme .theme-toggle:hover {
+  background: #3a3a3a;
 }

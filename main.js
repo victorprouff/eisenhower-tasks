@@ -11,7 +11,7 @@ function createWindow() {
     height: 900,
     minWidth: 1000,
     minHeight: 700,
-    titleBarStyle: 'hiddenInset', // Style macOS moderne
+    titleBarStyle: process.platform === 'darwin' ? 'default' : 'default',
     backgroundColor: '#f5f5f5',
     webPreferences: {
       nodeIntegration: false,

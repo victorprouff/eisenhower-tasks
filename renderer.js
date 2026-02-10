@@ -237,3 +237,22 @@ document.addEventListener('keydown', (e) => {
     taskInput.focus();
   }
 });
+
+// Gestion du thème
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+// Charger le thème sauvegardé
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark-theme');
+  themeIcon.textContent = '☀️';
+}
+
+// Basculer le thème
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.contains('dark-theme');
+  themeIcon.textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
