@@ -1,5 +1,3 @@
-# eisenhower-tasks
-
 # Matrice d'Eisenhower
 
 Application de bureau minimaliste pour gérer vos tâches selon la matrice d'Eisenhower.
@@ -89,16 +87,16 @@ npm run build
 ## Stockage des données
 
 Les tâches sont automatiquement sauvegardées localement dans :
-- macOS : `~/Library/Application Support/eisenhower-matrix/tasks.json`
-- Windows : `%APPDATA%/eisenhower-matrix/tasks.json`
-- Linux : `~/.config/eisenhower-matrix/tasks.json`
+- macOS : `~/Library/Application Support/eisenhower-tasks/tasks.json`
+- Windows : `%APPDATA%/eisenhower-tasks/tasks.json`
+- Linux : `~/.config/eisenhower-tasks/tasks.json`
 
 Aucune connexion internet n'est requise. Toutes vos données restent sur votre ordinateur.
 
 ## Structure du projet
 
 ```
-eisenhower-matrix/
+eisenhower-tasks/
 ├── main.js           # Processus principal Electron
 ├── preload.js        # Script de préchargement sécurisé
 ├── index.html        # Interface utilisateur
