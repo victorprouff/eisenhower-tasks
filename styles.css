@@ -76,7 +76,24 @@ body.dark-theme {
 }
 
 .theme-toggle:hover {
-  background: #f0f0f0;
+  background: var( --task-hover);
+}
+
+.clear-tasks {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  right: 60px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  font-size: 18px;
+}
+
+.clear-tasks:hover {
+  background: var(--task-hover);
 }
 
 .container {

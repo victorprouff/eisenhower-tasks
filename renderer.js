@@ -56,6 +56,14 @@ function deleteTask(id) {
   render();
 }
 
+function removeAllTasks() {
+  if (confirm('Êtes-vous sûr de vouloir supprimer toutes les tâches ?')) {
+    tasks = [];
+    saveTasks();
+    render();
+  }
+}
+
 // Créer un élément de tâche
 function createTaskElement(task, isDraggable = true) {
   const taskEl = document.createElement('div');
