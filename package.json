@@ -1,0 +1,62 @@
+{
+  "name": "eisenhower-tasks",
+  "version": "1.0.0",
+  "description": "Application de gestion des tâches avec la matrice d'Eisenhower",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorprouff/eisenhower-tasks.git"
+  },
+  "keywords": [
+    "eisenhower",
+    "productivity",
+    "task-management"
+  ],
+  "author": "Victor Prouff",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/victorprouff/eisenhower-tasks/issues"
+  },
+  "homepage": "https://github.com/victorprouff/eisenhower-tasks#readme",
+  "build": {
+    "appId": "com.eisenhower.matrix",
+    "productName": "Eisenhower Matrix",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "files": [
+      "main.js",
+      "renderer.js",
+      "index.html",
+      "styles.css"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^40.2.1",
+    "electron-builder": "^26.7.0"
+  }
+}
