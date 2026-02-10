@@ -16,6 +16,18 @@
   --task-bg: #f8f8f8;
   --task-hover: #f0f0f0;
   --shadow: rgba(0, 0, 0, 0.08);
+  
+  --danger-color-bg: #fee2e2;
+  --danger-color: #dc2626;
+  
+  --warning-color-bg: #ffedd5;
+  --warning-color: #ea580c;
+  
+  --info-color-bg: #dbeafe;
+  --info-color: #007aff;
+  
+  --neutral-color-bg: #cffafe;
+  --neutral-color: #0c4a6e;
 }
 
 body {
@@ -237,14 +249,14 @@ body.dark-theme {
 
 .task-delete:hover {
   background: var(--border-color);
-  color: #ff3b30;
+  color: var(--danger-color);
 }
 
 /* Code couleur par quadrant */
-.task-item.q1 { border-left-color: #ff3b30; }
-.task-item.q2 { border-left-color: #007aff; }
-.task-item.q3 { border-left-color: #ff9500; }
-.task-item.q4 { border-left-color: #8e8e93; }
+.task-item.q1 { border-left-color: var(--danger-color); }
+.task-item.q2 { border-left-color: var(--info-color); }
+.task-item.q3 { border-left-color: var(--warning-color); }
+.task-item.q4 { border-left-color: var(--neutral-color); }
 
 /* Matrice centrale */
 .matrix-container {
@@ -296,10 +308,10 @@ body.dark-theme {
   border-bottom: 2px solid;
 }
 
-.q1 .quadrant-header { border-bottom-color: #ff3b30; }
-.q2 .quadrant-header { border-bottom-color: #007aff; }
-.q3 .quadrant-header { border-bottom-color: #ff9500; }
-.q4 .quadrant-header { border-bottom-color: #8e8e93; }
+.q1 .quadrant-header { border-bottom-color: var(--danger-color); }
+.q2 .quadrant-header { border-bottom-color: var(--info-color); }
+.q3 .quadrant-header { border-bottom-color: var(--warning-color); }
+.q4 .quadrant-header { border-bottom-color: var(--neutral-color); }
 
 .quadrant-header h3 {
   font-size: 18px;
@@ -307,10 +319,10 @@ body.dark-theme {
   margin-bottom: 4px;
 }
 
-.q1 .quadrant-header h3 { color: #ff3b30; }
-.q2 .quadrant-header h3 { color: #007aff; }
-.q3 .quadrant-header h3 { color: #ff9500; }
-.q4 .quadrant-header h3 { color: #8e8e93; }
+.q1 .quadrant-header h3 { color: var(--danger-color); }
+.q2 .quadrant-header h3 { color: var(--info-color); }
+.q3 .quadrant-header h3 { color: var(--warning-color); }
+.q4 .quadrant-header h3 { color: var(--neutral-color); }
 
 .quadrant-label {
   font-size: 12px;
@@ -384,10 +396,10 @@ body.dark-theme {
   color: white;
 }
 
-.q1-bg { background: #ff3b30; }
-.q2-bg { background: #007aff; }
-.q3-bg { background: #ff9500; }
-.q4-bg { background: #8e8e93; }
+.q1-bg { background: var(--danger-color-bg); color: var(--danger-color); }
+.q2-bg { background: var(--info-color-bg); color: var(--info-color); }
+.q3-bg { background: var(--warning-color-bg); color: var(--warning-color); }
+.q4-bg { background: var(--neutral-color-bg); color: var(--neutral-color); }
 
 .priority-tasks {
   display: flex;
