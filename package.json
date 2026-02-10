@@ -1,6 +1,6 @@
 {
   "name": "eisenhower-tasks",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Application de gestion des tâches avec la matrice d'Eisenhower",
   "main": "main.js",
   "scripts": {
@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/victorprouff/eisenhower-tasks#readme",
   "build": {
-    "appId": "com.eisenhower.matrix",
-    "productName": "Eisenhower Matrix",
+    "appId": "com.eisenhower.tasks",
+    "productName": "Eisenhower Tasks",
     "mac": {
       "category": "public.app-category.productivity",
       "target": [
