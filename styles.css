@@ -446,3 +446,28 @@ body.dark-theme {
 body.dark-theme .theme-toggle:hover {
   background: #3a3a3a;
 }
+
+/* Case à cocher pour les tâches */
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: #007aff;
+}
+
+/* Tâche complétée */
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+
+/* Empêcher la case à cocher de déclencher le drag */
+.task-checkbox {
+  pointer-events: auto;
+}

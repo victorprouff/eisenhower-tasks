@@ -40,6 +40,7 @@ function addTask() {
     id: Date.now().toString(),
     text: text,
     quadrant: null,
+    completed: false,
     createdAt: new Date().toISOString()
   };
 
@@ -56,6 +57,15 @@ function deleteTask(id) {
   render();
 }
 
+function toggleTaskComplete(id) {
+  const task = tasks.find(t => t.id === id);
+  if (task) {
+    task.completed = !task.completed;
+    saveTasks();
+    render();
+  }
+}
+
 function removeAllTasks() {
   if (confirm('Êtes-vous sûr de vouloir supprimer toutes les tâches ?')) {
     tasks = [];
@@ -64,11 +74,15 @@ function removeAllTasks() {
   }
 }
 
-// Créer un élément de tâche
+// Remplace toute la fonction createTaskElement par :
 function createTaskElement(task, isDraggable = true) {
   const taskEl = document.createElement('div');
   taskEl.className = 'task-item';
   taskEl.dataset.taskId = task.id;
+  
+  if (task.completed) {
+    taskEl.classList.add('completed');
+  }
   
   if (task.quadrant) {
     taskEl.classList.add(`q${task.quadrant}`);
@@ -79,6 +93,16 @@ function createTaskElement(task, isDraggable = true) {
     taskEl.addEventListener('dragstart', handleDragStart);
     taskEl.addEventListener('dragend', handleDragEnd);
   }
+
+  // Case à cocher
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.className = 'task-checkbox';
+  checkbox.checked = task.completed;
+  checkbox.onclick = (e) => {
+    e.stopPropagation();
+    toggleTaskComplete(task.id);
+  };
 
   const textSpan = document.createElement('span');
   textSpan.className = 'task-text';
@@ -92,6 +116,7 @@ function createTaskElement(task, isDraggable = true) {
     deleteTask(task.id);
   };
 
+  taskEl.appendChild(checkbox);
   taskEl.appendChild(textSpan);
   taskEl.appendChild(deleteBtn);
 
@@ -177,7 +202,10 @@ function render() {
   }
 
   // Afficher les tâches non assignées
-  const unassignedTasks = tasks.filter(t => !t.quadrant);
+  const unassignedTasks = tasks
+    .filter(t => !t.quadrant)
+    .sort((a, b) => a.completed - b.completed); // ← Tâches non complétées en premier
+  
   if (unassignedTasks.length === 0) {
     taskList.innerHTML = '<div class="empty-state">Aucune tâche en attente</div>';
   } else {
@@ -188,7 +216,9 @@ function render() {
 
   // Afficher les tâches dans les quadrants
   for (let i = 1; i <= 4; i++) {
-    const quadrantTasks = tasks.filter(t => t.quadrant === i);
+    const quadrantTasks = tasks.filter(t => t.quadrant === i)
+          .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1); // ← Tâches non complétées en premier
+
     const zone = document.querySelector(`[data-drop-zone="${i}"]`);
     
     if (quadrantTasks.length === 0) {
@@ -209,7 +239,8 @@ function renderPriorityList() {
   // Ordre de priorité : 1 (urgent & important) -> 2 (important) -> 3 (urgent) -> 4 (ni urgent ni important)
   for (let i = 1; i <= 4; i++) {
     const priorityContainer = document.getElementById(`priority-${i}`);
-    const quadrantTasks = tasks.filter(t => t.quadrant === i);
+    const quadrantTasks = tasks.filter(t => t.quadrant === i)
+          .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1); // ← Tâches non complétées en premier
     
     if (quadrantTasks.length === 0) {
       priorityContainer.innerHTML = '<div class="empty-state">Aucune tâche</div>';
