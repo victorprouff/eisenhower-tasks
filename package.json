@@ -8,7 +8,8 @@
     "build": "electron-builder",
     "build:mac": "electron-builder --mac",
     "build:win": "electron-builder --win",
-    "build:linux": "electron-builder --linux"
+    "build:linux": "electron-builder --linux",
+    "build:publish": "electron-builder --publish always"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,7 @@
         "dmg",
         "zip"
       ],
-    "icon": "build/icon.icns"
+      "icon": "build/icon.icns"
     },
     "win": {
       "target": [
@@ -58,10 +59,20 @@
       "index.html",
       "styles.css",
       "build/icon.*"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "victorprouff",
+        "repo": "eisenhower-tasks"
+      }
     ]
   },
   "devDependencies": {
     "electron": "^40.2.1",
     "electron-builder": "^26.7.0"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3"
   }
 }

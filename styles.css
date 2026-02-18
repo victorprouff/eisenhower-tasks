@@ -483,3 +483,40 @@ body.dark-theme .theme-toggle:hover {
 .task-checkbox {
   pointer-events: auto;
 }
+
+/* Bannière de mise à jour */
+.update-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background-color: var(--info-color-bg);
+  color: var(--info-color);
+  font-size: 13px;
+  border-top: 1px solid var(--info-color);
+}
+
+.update-banner.hidden {
+  display: none;
+}
+
+.update-banner #update-install-btn {
+  padding: 4px 12px;
+  background-color: var(--info-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.update-banner #update-install-btn:hover {
+  opacity: 0.85;
+}

@@ -295,3 +295,26 @@ themeToggle.addEventListener('click', () => {
   themeIcon.textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
+
+// Mises à jour automatiques
+const updateBanner = document.getElementById('update-banner');
+const updateMessage = document.getElementById('update-message');
+const updateInstallBtn = document.getElementById('update-install-btn');
+
+if (window.electronAPI) {
+  window.electronAPI.onUpdateAvailable((version) => {
+    updateMessage.textContent = `Mise à jour v${version} disponible — téléchargement en cours...`;
+    updateInstallBtn.style.display = 'none';
+    updateBanner.classList.remove('hidden');
+  });
+
+  window.electronAPI.onUpdateDownloaded((version) => {
+    updateMessage.textContent = `v${version} prête à installer.`;
+    updateInstallBtn.style.display = '';
+    updateBanner.classList.remove('hidden');
+  });
+
+  updateInstallBtn.addEventListener('click', () => {
+    window.electronAPI.restartAndInstall();
+  });
+}
