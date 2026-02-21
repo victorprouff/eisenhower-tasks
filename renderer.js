@@ -12,6 +12,7 @@ const dropZones = document.querySelectorAll('.quadrant-tasks');
 document.addEventListener('DOMContentLoaded', async () => {
   await loadTasks();
   setupEventListeners();
+  applyTranslations();
   render();
 });
 
@@ -28,6 +29,14 @@ function setupEventListeners() {
     zone.addEventListener('dragover', handleDragOver);
     zone.addEventListener('drop', handleDrop);
     zone.addEventListener('dragleave', handleDragLeave);
+  });
+
+  // Changement de langue
+  const langToggle = document.getElementById('langToggle');
+  langToggle.addEventListener('click', () => {
+    setLang(currentLang === 'fr' ? 'en' : 'fr');
+    applyTranslations();
+    render();
   });
 }
 
@@ -67,23 +76,22 @@ function toggleTaskComplete(id) {
 }
 
 function removeAllTasks() {
-  if (confirm('Êtes-vous sûr de vouloir supprimer toutes les tâches ?')) {
+  if (confirm(t('confirmDeleteAll'))) {
     tasks = [];
     saveTasks();
     render();
   }
 }
 
-// Remplace toute la fonction createTaskElement par :
 function createTaskElement(task, isDraggable = true) {
   const taskEl = document.createElement('div');
   taskEl.className = 'task-item';
   taskEl.dataset.taskId = task.id;
-  
+
   if (task.completed) {
     taskEl.classList.add('completed');
   }
-  
+
   if (task.quadrant) {
     taskEl.classList.add(`q${task.quadrant}`);
   }
@@ -134,8 +142,7 @@ function handleDragStart(e) {
 function handleDragEnd(e) {
   e.target.classList.remove('dragging');
   draggedTask = null;
-  
-  // Retirer l'état drag-over de tous les quadrants
+
   document.querySelectorAll('.quadrant').forEach(q => {
     q.classList.remove('drag-over');
   });
@@ -145,15 +152,14 @@ function handleDragOver(e) {
   if (e.preventDefault) {
     e.preventDefault();
   }
-  
+
   e.dataTransfer.dropEffect = 'move';
-  
-  // Ajouter l'effet visuel au quadrant
+
   const quadrant = e.target.closest('.quadrant');
   if (quadrant) {
     quadrant.classList.add('drag-over');
   }
-  
+
   return false;
 }
 
@@ -168,17 +174,16 @@ function handleDrop(e) {
   if (e.stopPropagation) {
     e.stopPropagation();
   }
-  
+
   e.preventDefault();
-  
+
   const quadrant = e.target.closest('.quadrant');
   quadrant.classList.remove('drag-over');
-  
+
   if (draggedTask) {
     const taskId = draggedTask.dataset.taskId;
     const quadrantNumber = parseInt(e.target.dataset.dropZone);
-    
-    // Mettre à jour la tâche
+
     const task = tasks.find(t => t.id === taskId);
     if (task) {
       task.quadrant = quadrantNumber;
@@ -186,43 +191,39 @@ function handleDrop(e) {
       render();
     }
   }
-  
+
   return false;
 }
 
 // Rendu de l'interface
 function render() {
-  // Vider tous les conteneurs
   taskList.innerHTML = '';
   dropZones.forEach(zone => zone.innerHTML = '');
-  
-  // Réinitialiser les listes priorisées
+
   for (let i = 1; i <= 4; i++) {
     document.getElementById(`priority-${i}`).innerHTML = '';
   }
 
-  // Afficher les tâches non assignées
   const unassignedTasks = tasks
     .filter(t => !t.quadrant)
-    .sort((a, b) => a.completed - b.completed); // ← Tâches non complétées en premier
-  
+    .sort((a, b) => a.completed - b.completed);
+
   if (unassignedTasks.length === 0) {
-    taskList.innerHTML = '<div class="empty-state">Aucune tâche en attente</div>';
+    taskList.innerHTML = `<div class="empty-state">${t('emptyUnassigned')}</div>`;
   } else {
     unassignedTasks.forEach(task => {
       taskList.appendChild(createTaskElement(task));
     });
   }
 
-  // Afficher les tâches dans les quadrants
   for (let i = 1; i <= 4; i++) {
-    const quadrantTasks = tasks.filter(t => t.quadrant === i)
-          .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1); // ← Tâches non complétées en premier
+    const quadrantTasks = tasks.filter(task => task.quadrant === i)
+          .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1);
 
     const zone = document.querySelector(`[data-drop-zone="${i}"]`);
-    
+
     if (quadrantTasks.length === 0) {
-      zone.innerHTML = '<div class="empty-state">Glissez une tâche ici</div>';
+      zone.innerHTML = `<div class="empty-state">${t('emptyQuadrant')}</div>`;
     } else {
       quadrantTasks.forEach(task => {
         zone.appendChild(createTaskElement(task));
@@ -230,20 +231,18 @@ function render() {
     }
   }
 
-  // Remplir la liste priorisée (colonne droite)
   renderPriorityList();
 }
 
 // Afficher la liste priorisée
 function renderPriorityList() {
-  // Ordre de priorité : 1 (urgent & important) -> 2 (important) -> 3 (urgent) -> 4 (ni urgent ni important)
   for (let i = 1; i <= 4; i++) {
     const priorityContainer = document.getElementById(`priority-${i}`);
-    const quadrantTasks = tasks.filter(t => t.quadrant === i)
-          .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1); // ← Tâches non complétées en premier
-    
+    const quadrantTasks = tasks.filter(task => task.quadrant === i)
+          .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1);
+
     if (quadrantTasks.length === 0) {
-      priorityContainer.innerHTML = '<div class="empty-state">Aucune tâche</div>';
+      priorityContainer.innerHTML = `<div class="empty-state">${t('emptyPriority')}</div>`;
     } else {
       quadrantTasks.forEach(task => {
         priorityContainer.appendChild(createTaskElement(task, false));
@@ -270,7 +269,6 @@ async function loadTasks() {
 
 // Gestion des raccourcis clavier
 document.addEventListener('keydown', (e) => {
-  // Cmd/Ctrl + N : Nouvelle tâche
   if ((e.metaKey || e.ctrlKey) && e.key === 'n') {
     e.preventDefault();
     taskInput.focus();
@@ -281,14 +279,12 @@ document.addEventListener('keydown', (e) => {
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
 
-// Charger le thème sauvegardé
 const savedTheme = localStorage.getItem('theme') || 'dark';
 if (savedTheme === 'dark') {
   document.body.classList.add('dark-theme');
   themeIcon.textContent = '☀️';
 }
 
-// Basculer le thème
 themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-theme');
   const isDark = document.body.classList.contains('dark-theme');
@@ -303,13 +299,13 @@ const updateInstallBtn = document.getElementById('update-install-btn');
 
 if (window.electronAPI) {
   window.electronAPI.onUpdateAvailable((version) => {
-    updateMessage.textContent = `Mise à jour v${version} disponible — téléchargement en cours...`;
+    updateMessage.textContent = t('updateAvailable', version);
     updateInstallBtn.style.display = 'none';
     updateBanner.classList.remove('hidden');
   });
 
   window.electronAPI.onUpdateDownloaded((version) => {
-    updateMessage.textContent = `v${version} prête à installer.`;
+    updateMessage.textContent = t('updateReady', version);
     updateInstallBtn.style.display = '';
     updateBanner.classList.remove('hidden');
   });

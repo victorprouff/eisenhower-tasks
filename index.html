@@ -8,37 +8,37 @@
 </head>
 <body>
   <div class="titlebar">
-    <span class="titlebar-text">Matrice d'Eisenhower</span>
-  </div>
-  <div class="titlebar">
-  <span class="titlebar-text">Matrice d'Eisenhower</span>
-  <button class="clear-tasks" id="clearTasks" title="Supprimer toutes les tâches" onclick="removeAllTasks()">🗑️</button>
-  <button class="theme-toggle" id="themeToggle" title="Changer de thème">
+  <span class="titlebar-text" data-i18n="appTitle">Matrice d'Eisenhower</span>
+  <button class="clear-tasks" id="clearTasks" data-i18n="clearTasksTitle" data-i18n-attr="title" title="Supprimer toutes les tâches" onclick="removeAllTasks()">🗑️</button>
+  <button class="lang-toggle" id="langToggle" title="Switch to English">EN</button>
+  <button class="theme-toggle" id="themeToggle" data-i18n="themeToggleTitle" data-i18n-attr="title" title="Changer de thème">
     <span class="theme-icon">🌙</span>
   </button>
 </div>
   <div id="update-banner" class="update-banner hidden">
     <span id="update-message"></span>
-    <button id="update-install-btn">Redémarrer et mettre à jour</button>
+    <button id="update-install-btn" data-i18n="restartAndUpdate">Redémarrer et mettre à jour</button>
   </div>
 
   <div class="container">
     <!-- Colonne gauche : Ajout de tâches -->
     <aside class="sidebar left-sidebar">
       <div class="sidebar-header">
-        <h2>Nouvelle tâche</h2>
+        <h2 data-i18n="newTask">Nouvelle tâche</h2>
       </div>
       <div class="add-task-section">
-        <input 
-          type="text" 
-          id="taskInput" 
+        <input
+          type="text"
+          id="taskInput"
+          data-i18n="taskInputPlaceholder"
+          data-i18n-attr="placeholder"
           placeholder="Entrez une tâche..."
           autocomplete="off"
         >
-        <button id="addTaskBtn">Ajouter</button>
+        <button id="addTaskBtn" data-i18n="addTask">Ajouter</button>
       </div>
       <div class="unassigned-tasks">
-        <h3>Tâches non assignées</h3>
+        <h3 data-i18n="unassignedTasks">Tâches non assignées</h3>
         <div id="taskList" class="task-list"></div>
       </div>
     </aside>
@@ -46,14 +46,14 @@
     <!-- Centre : Matrice d'Eisenhower -->
     <main class="matrix-container">
       <div class="matrix-header">
-        <h1>Matrice d'Eisenhower</h1>
+        <h1 data-i18n="appTitle">Matrice d'Eisenhower</h1>
       </div>
       <div class="matrix">
         <!-- Quadrant 1 : Urgent & Important -->
         <div class="quadrant q1" data-quadrant="1">
           <div class="quadrant-header">
-            <h3>Faire immédiatement</h3>
-            <span class="quadrant-label">Urgent & Important</span>
+            <h3 data-i18n="q1Title">Faire immédiatement</h3>
+            <span class="quadrant-label" data-i18n="q1Label">Urgent & Important</span>
           </div>
           <div class="quadrant-tasks" data-drop-zone="1"></div>
         </div>
@@ -61,8 +61,8 @@
         <!-- Quadrant 2 : Important mais pas urgent -->
         <div class="quadrant q2" data-quadrant="2">
           <div class="quadrant-header">
-            <h3>Planifier</h3>
-            <span class="quadrant-label">Important & Non urgent</span>
+            <h3 data-i18n="q2Title">Planifier</h3>
+            <span class="quadrant-label" data-i18n="q2Label">Important & Non urgent</span>
           </div>
           <div class="quadrant-tasks" data-drop-zone="2"></div>
         </div>
@@ -70,8 +70,8 @@
         <!-- Quadrant 3 : Urgent mais pas important -->
         <div class="quadrant q3" data-quadrant="3">
           <div class="quadrant-header">
-            <h3>Déléguer - Annuler si pas le temps</h3>
-            <span class="quadrant-label">Urgent & Non important</span>
+            <h3 data-i18n="q3Title">Déléguer - Annuler si pas le temps</h3>
+            <span class="quadrant-label" data-i18n="q3Label">Urgent & Non important</span>
           </div>
           <div class="quadrant-tasks" data-drop-zone="3"></div>
         </div>
@@ -79,8 +79,8 @@
         <!-- Quadrant 4 : Ni urgent ni important -->
         <div class="quadrant q4" data-quadrant="4">
           <div class="quadrant-header">
-            <h3>À piocher si on en a envie et le temps</h3>
-            <span class="quadrant-label">Non urgent & Non important</span>
+            <h3 data-i18n="q4Title">À piocher si on en a envie et le temps</h3>
+            <span class="quadrant-label" data-i18n="q4Label">Non urgent & Non important</span>
           </div>
           <div class="quadrant-tasks" data-drop-zone="4"></div>
         </div>
@@ -89,10 +89,10 @@
       <!-- Labels des axes -->
       <div class="axis-labels">
         <div class="axis-label vertical">
-          <span>IMPORTANCE</span>
+          <span data-i18n="axisImportance">IMPORTANCE</span>
         </div>
         <div class="axis-label horizontal">
-          <span>URGENCE</span>
+          <span data-i18n="axisUrgency">URGENCE</span>
         </div>
       </div>
     </main>
@@ -100,29 +100,30 @@
     <!-- Colonne droite : Liste priorisée -->
     <aside class="sidebar right-sidebar">
       <div class="sidebar-header">
-        <h2>Liste priorisée</h2>
+        <h2 data-i18n="prioritizedList">Liste priorisée</h2>
       </div>
       <div class="prioritized-list">
         <div class="priority-section" data-priority="1">
-          <h3 class="priority-header q1-bg">Faire maintenant</h3>
+          <h3 class="priority-header q1-bg" data-i18n="priority1">Faire maintenant</h3>
           <div class="priority-tasks" id="priority-1"></div>
         </div>
         <div class="priority-section" data-priority="2">
-          <h3 class="priority-header q2-bg">Planifier</h3>
+          <h3 class="priority-header q2-bg" data-i18n="priority2">Planifier</h3>
           <div class="priority-tasks" id="priority-2"></div>
         </div>
         <div class="priority-section" data-priority="3">
-          <h3 class="priority-header q3-bg">Déléguer</h3>
+          <h3 class="priority-header q3-bg" data-i18n="priority3">Déléguer</h3>
           <div class="priority-tasks" id="priority-3"></div>
         </div>
         <div class="priority-section" data-priority="4">
-          <h3 class="priority-header q4-bg">À piocher</h3>
+          <h3 class="priority-header q4-bg" data-i18n="priority4">À piocher</h3>
           <div class="priority-tasks" id="priority-4"></div>
         </div>
       </div>
     </aside>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="renderer.js"></script>
 </body>
 </html>

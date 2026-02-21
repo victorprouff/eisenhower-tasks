@@ -94,7 +94,7 @@ body.dark-theme {
 .clear-tasks {
   -webkit-app-region: no-drag;
   position: absolute;
-  right: 60px;
+  right: 100px;
   background: none;
   border: none;
   cursor: pointer;
@@ -105,6 +105,26 @@ body.dark-theme {
 }
 
 .clear-tasks:hover {
+  background: var(--task-hover);
+}
+
+.lang-toggle {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  right: 60px;
+  background: none;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.lang-toggle:hover {
   background: var(--task-hover);
 }
 
